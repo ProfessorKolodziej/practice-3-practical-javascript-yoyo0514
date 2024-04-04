@@ -1,0 +1,79 @@
+{
+  "name": "student-site-boilerplate",
+  "description": "A modern boilerplate for static website development, based on https://staticsiteboilerplate.com/",
+  "version": "1.1.0",
+  "homepage": "https://github.com/ProfessorKolodziej/student-site-boilerplate",
+  "author": {
+    "name": "Ashley Kolodziej",
+    "url": "https://ashleykolodziej.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProfessorKolodziej/student-site-boilerplate.git"
+  },
+  "keywords": [
+    "html5",
+    "css3",
+    "es6"
+  ],
+  "scripts": {
+    "start": "cross-env live-server src",
+    "lint:html": "echo \"Validating your HTML...\" && html-validate --config .htmlvalidate.json --formatter @profkexplains/htmlvalidate \"src\" && chalk green --no-stdin \"✓ No errors found in your HTML\n\n\"",
+    "lint:styles": "echo \"Starting Stylelint...\" && stylelint \"src/**/*.css\" --custom-formatter ./config/formatter.stylelint.js && chalk green --no-stdin \"✓ No errors found in your CSS\n\n\"",
+    "lint": "npm run lint:html",
+    "fix": "stylelint --fix \"src/**/*.css\" && chalk green --no-stdin \"✓ Attempted to automatically fix CSS errors\n\" && echo \"\nAll set! Run 'npm run lint' to check for errors \nthat need to be fixed manually.\n\"",
+    "deploy": "gh-pages -d src",
+    "test": "npm run lint && echo \"Checking assignment requirements...\" && jest --silent=false && chalk green --no-stdin \"✓ All tests passed. Nice work!\""
+  },
+  "devDependencies": {
+    "chalk-cli": "^5.0.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.43.0",
+    "file-loader": "^6.2.0",
+    "gh-pages": "^5.0.0",
+    "live-server": "^1.2.2",
+    "stylelint": "^15.8.0",
+    "stylelint-config-standard": "^34.0.0"
+  },
+  "dependencies": {
+    "cm523-unit-tests": "github:ProfessorKolodziej/cm523-unit-tests",
+    "@profkexplains/htmlvalidate": "file:config/htmlvalidate",
+    "html-validate": "^8.0.5",
+    "jest": "^29.5.0"
+  },
+  "jest": {
+    "clearMocks": true,
+    "testMatch": [
+      "**/?(*.)+(spec|test).[jt]s?(x)"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/(?!(cm523-unit-tests)/final-project)"
+    ],
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(cm523-unit-tests)/final-project)"
+    ],
+    "haste": {
+      "retainAllFiles": true
+    },
+    "transform": {
+      "\\.js$": [
+        "babel-jest",
+        {
+          "configFile": "./node_modules/cm523-unit-tests/babel.config.js"
+        }
+      ]
+    }
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "rules": {
+      "media-feature-range-notation": [ "context", { "severity": "warning" }]
+    }
+  }
+}
